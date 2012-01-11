@@ -1,0 +1,40 @@
+http://dashb-cms-job.cern.ch/dashboard/request.py/taskstablejson?&typeofrequest=A&timerange=lastMonth&usergridname=Mcinquil
+
+
+
+
+
+{
+	"username": "Mcinquil", 
+	"plotParameters": "usergridname=Mcinquil&timerange=lastMonth&typeofrequest=A&tasktype=&from=", 
+	"tasks": [
+		   {
+			"SUCCDONE":0, 
+			"TASKMONID": "cinquilli.nocern_crab_0_111219_141929_7n6hf9", 
+			"SUCCESS": 0, 
+			"TaskCreatedTimeStamp": "2011-12-19T14:27:27.733850", 
+			"UNKNOWN": 0, 
+			"NUMOFJOBS": 79, 
+			"FAILED": 79, 
+			"RUNNING": 0, 
+			"TASKID": 6654779, 
+			"INPUTCOLLECTION": "unknown", 
+			"PENDING": 0
+		   }
+
+		   {
+			"SUCCDONE":0, 
+			"TASKMONID": "cinquilli.nocern_crab_0_111219_141929_7n6hf9", 
+			"SUCCESS": 0, 
+			"TaskCreatedTimeStamp": "2011-12-19T14:27:27.733850", 
+			"UNKNOWN": 0, 
+			"NUMOFJOBS": 79, 
+			"FAILED": 79, 
+			"RUNNING": 0, 
+			"TASKID": 6654779, 
+			"INPUTCOLLECTION": "unknown", 
+			"PENDING": 0
+		   }
+		]
+
+}

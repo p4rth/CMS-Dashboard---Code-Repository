@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- <ScrollView android:layout_width="wrap_content" -->
+<!--     			android:layout_height="wrap_content"> -->
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+        <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#000000"        
+        android:orientation="horizontal"
+        android:paddingLeft="20sp"
+        android:paddingRight="20sp"
+        android:paddingBottom="20sp" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logotext" android:adjustViewBounds="true"
+            android:layout_marginTop="5dp"
+            android:onClick="scrollToTop"/>
+
+    </LinearLayout>
+    
+    
+<!--     <LinearLayout -->
+<!--         android:id="@+id/linearLayout1" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="match_parent" -->
+<!--         android:orientation="vertical" > -->
+        
+<!--                 <TextView -->
+<!--         android:id="@+id/textView1" -->
+<!--         android:singleLine="true" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:text="Long Task Name: caudron_crab_Data_SingleMu_Run2011A_172620_175770_noduplicated_n864jy" -->
+<!--         android:ellipsize="marquee" -->
+<!--         android:marqueeRepeatLimit="marquee_forever" -->
+<!--         android:focusable="true" -->
+<!--         android:focusableInTouchMode="true" -->
+<!--         android:scrollHorizontally="true" -->
+<!--         android:textSize="16sp" -->
+<!--         android:textColor="#79BAEC"/> -->
+                
+<!--     </LinearLayout> -->
+    
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >        
+	    <ListView android:id="@+id/TASKS_LIST"
+	        android:layout_height="fill_parent"
+	        android:layout_width="fill_parent">
+	        
+	    </ListView>
+    </LinearLayout>        
+</LinearLayout>
+<!-- </ScrollView> -->
