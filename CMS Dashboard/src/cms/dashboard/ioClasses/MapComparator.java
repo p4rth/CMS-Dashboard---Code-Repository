@@ -1,8 +1,12 @@
-package cms.dashboard.ui;
+package cms.dashboard.ioClasses;
 
 import java.util.Comparator;
 import java.util.Map;
 
+/**
+ * @author Parth Patel [parthpatel32@gmail.com]
+ *
+ */
 public class MapComparator implements Comparator<Map<String, String>>{
 
 	private final String key;

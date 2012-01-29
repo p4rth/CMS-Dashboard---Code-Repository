@@ -14,8 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import cms.dashboard.feedModels.TasksModel;
 import cms.dashboard.ui.R;
 
+/**
+ * @author Parth Patel [parthpatel32@gmail.com]
+ *
+ */
 public class TasksAdapter extends ArrayAdapter {
 	int resource;
 	String response;

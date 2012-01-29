@@ -1,6 +1,8 @@
-package cms.dashboard.ui;
+package cms.dashboard.ioClasses;
 
 import java.net.URI;
+import java.net.UnknownHostException;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -8,6 +10,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 /**
@@ -15,6 +20,17 @@ import android.util.Log;
  *
  */
 public class JSONFunctions {
+	
+	//This function checks for Data Connection.
+	public static boolean checkDataConn(Context context)
+	{
+        ConnectivityManager connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+        if(info == null)
+            return false;
+
+        return connectivityManager.getActiveNetworkInfo().isConnected();
+	}
 
 	public static JSONObject getJSONFromURL(String url)
 	{
@@ -32,7 +48,13 @@ public class JSONFunctions {
 			if (getResponseEntity != null) {
 			result= EntityUtils.toString(getResponseEntity);}
 			//Log.e("Results", result);
-		}catch(Exception e){
+		}
+		catch(UnknownHostException e)
+		{
+			Log.e("JSON_GET", "Cannot find Host: "+e.toString());
+			return jArray;
+		}
+		catch(Exception e){
 			e.printStackTrace();
 			Log.e("JSON_GET", "Error in HTTP Conn: "+ e.toString());
 		}

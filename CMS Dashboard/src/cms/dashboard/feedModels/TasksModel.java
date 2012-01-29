@@ -1,4 +1,4 @@
-package cms.dashboard.ui;
+package cms.dashboard.feedModels;
 
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -8,6 +8,10 @@ import java.util.Date;
 import android.util.Log;
 
 
+/**
+ * @author Parth Patel [parthpatel32@gmail.com]
+ *
+ */
 public class TasksModel {
 	public int NUMOFJOBS;
     public String INPUTCOLLECTION;
