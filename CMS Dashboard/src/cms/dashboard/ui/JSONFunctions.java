@@ -10,6 +10,10 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+/**
+ * @author Parth Patel [parthpatel32@gmail.com]
+ *
+ */
 public class JSONFunctions {
 
 	public static JSONObject getJSONFromURL(String url)
