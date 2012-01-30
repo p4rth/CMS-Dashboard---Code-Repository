@@ -1,13 +1,5 @@
 package cms.dashboard.feedModels;
 
-import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-
-import android.util.Log;
-
-
 public class JobsModel {
 	
 	public String STATUS;

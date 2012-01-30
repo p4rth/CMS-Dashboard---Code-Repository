@@ -87,12 +87,10 @@ public class JobViewActivity extends Activity {
 			TIME_RANGE = extras.getString("timeRange");
 		}
 		
-		//Toast.makeText(this, TASK_NAME + "/n" + TIME_RANGE, 3);
-		
 		//New code
 		lv = (ListView)findViewById(R.id.JOBS_LIST);
 		jobsArray = new ArrayList<JobsModel>();
-		jobsadapter = new JobsAdapter(JobViewActivity.this,R.layout.job_list_item,jobsArray);
+		jobsadapter = new JobsAdapter(JobViewActivity.this,R.layout.job_list_item, jobsArray);
 		
 		lv.setTextFilterEnabled(true);
 		lv.setAdapter(jobsadapter);
@@ -144,7 +142,13 @@ public class JobViewActivity extends Activity {
 			jobsadapter.notifyDataSetChanged();
 			enableMenuSort = true;
 			progressDialog.dismiss();
+			lv.setOnItemClickListener(new OnItemClickListener() {
+				public void onItemClick(AdapterView<?> arg0, View arg1,	int position, long arg3) {
+					showJobDetails(position);
+				}	
+			});
 			Toast.makeText(getApplicationContext(), String.valueOf(jobsArray.size()) +" Tasks found", Toast.LENGTH_SHORT).show();
+			
 		}
 
 		protected void onCancelled() {
@@ -153,7 +157,29 @@ public class JobViewActivity extends Activity {
 		
 	}
 	
+	private void showJobDetails(int position) {
 		
+		Intent jobDetailView = new Intent(Intent.ACTION_VIEW);
+    	jobDetailView.setClassName(this, JobDetails.class.getName());
+    	
+    	//Pass selected variables to JobDetails
+
+      	jobDetailView.putExtra("taskName", TASK_NAME );
+    	jobDetailView.putExtra("timeRange", TIME_RANGE);
+       	jobDetailView.putExtra("idInTask", jobsadapter.idInTask);
+    	jobDetailView.putExtra("applStatus", jobsadapter.applStatus);
+    	jobDetailView.putExtra("applExitCode", jobsadapter.applExitCode);
+    	jobDetailView.putExtra("gridEndStatus", jobsadapter.gridEndStatus);
+      	jobDetailView.putExtra("retries", jobsadapter.retries);
+    	jobDetailView.putExtra("site", jobsadapter.site);
+      	jobDetailView.putExtra("submitted", jobsadapter.submitted);
+    	jobDetailView.putExtra("started", jobsadapter.started);
+      	jobDetailView.putExtra("finished", jobsadapter.finished);
+    	
+    	
+    	startActivity(jobDetailView);		
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -285,40 +311,6 @@ public class JobViewActivity extends Activity {
 	
 	}
 	
-//	private class loadTasks extends AsyncTask<Void,Void,JSONObject>
-//	{
-//		@Override
-//		protected JSONObject doInBackground(Void... params) {
-//			
-//			String jsonURL = createJsonURL(GRID_NAME,TIME_RANGE);
-//			
-//			JSONObject json = JSONFunctions.getJSONFromURL(jsonURL);
-//			jobList.clear();
-//			
-//            try{
-//            	JSONArray usernm = json.getJSONArray("tasks");
-//            	for(int i=0;i<usernm.length();i++)
-//            	{
-//            		HashMap<String,String> map = new HashMap<String, String>();
-//            		JSONObject e = usernm.getJSONObject(i);
-//            		map.put("localId", String.valueOf(i));
-//            		map.put("TOTAL_NO", "Total: " + e.getString("NUMOFJOBS"));
-//            		map.put("SUCCESS_NO", "Successful: "+e.getString("SUCCESS"));
-//            		map.put("COMPLETED", "Completed: "+e.getString("SUCCDONE") + " out of " + e.getString("NUMOFJOBS"));
-//            		map.put("TASK_SCREEN_NAME", e.getString("TASKMONID"));
-//            		map.put("RUNNING_NO", "Running: "+ e.getString("RUNNING"));
-//            		map.put("TASK_SUBMIT_DATE", getElapsedTime(e.getString("TaskCreatedTimeStamp")));
-//            		map.put("PENDING_NO", "Pending: " + e.getString("PENDING"));
-//            		map.put("UNKNOWN_NO", "Unknown: " + e.getString("UNKNOWN"));
-//            		map.put("FAILED_NO", "Failed: "+e.getString("FAILED"));
-//            		jobList.add(map);
-//            	}
-//            }catch (Exception e){
-//            	Log.e("TASK_List", "Error parsing JSON: " + e.toString());
-//            }			
-//			return json;
-//		}
-		
 		public String getElapsedTime(String dt) {
 			dt = dt.substring(0,dt.indexOf("T"));
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -341,80 +333,10 @@ public class JobViewActivity extends Activity {
 		    }
 		    return dt;
 		}
-
-		
-//		@Override
-//		protected void onPostExecute(JSONObject json)
-//		{
-//			
-//			if(jobList.size()>0)
-//			{
-//				//TASK_SCREEN_NAME
-//				Collections.sort(jobList, new MapComparator("TASK_SUBMIT_DATE"));
-//				
-//				ListAdapter adapter =new SimpleAdapter(JobViewActivity.this,
-//	   							jobList,R.layout.task_list_item,
-//	   							new String[] {"TOTAL_NO","SUCCESS_NO","COMPLETED","TASK_SCREEN_NAME","RUNNING_NO","TASK_SUBMIT_DATE","PENDING_NO","UNKNOWN_NO","FAILED_NO"},
-//	   							new int[] {R.id.TOTAL_NO,R.id.SUCCESS_NO,R.id.COMPLETED,R.id.TASK_SCREEN_NAME,R.id.RUNNING_NO,R.id.TASK_SUBMIT_DATE,R.id.PENDING_NO,R.id.UNKNOWN_NO,R.id.FAILED_NO});
-//	
-//				
-//				ListView mainListView = (ListView)findViewById(R.id.TASKS_LIST);
-//				mainListView.setAdapter(adapter);								
-//				final ListView lv = (ListView)findViewById(R.id.TASKS_LIST);
-//				lv.setTextFilterEnabled(true);
-//				lv.setOnItemClickListener(new OnItemClickListener() {
-//			  	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {        		
-//			  		@SuppressWarnings("unchecked")
-//						HashMap<String, String> o = (HashMap<String, String>) lv.getItemAtPosition(position);	
-//			  		
-//			  		Toast.makeText(getApplicationContext(), 
-//			  						o.get("TASK_SCREEN_NAME") + "\n\n" + o.get("COMPLETED"), 
-//			  						Toast.LENGTH_SHORT).show();
-//			  		
-//			  		//TODO implement Jobs View
-//			  		//TODO enable following code to load jobs 
-//			  	      		//Intent jobsActivity = new Intent(Intent.ACTION_VIEW);
-//			  	      		//jobsActivity.setClass(this, jobactivityclass.class.getName());	      		
-//			  	      		//jobsActivity.putExtra("TASK_NAME", o.get("TASK_SCREEN_NAME"));
-//			  	      		//startActivity(jobsActivity);	      			      		
-//			  	}
-//				});
-//				progressDialog.dismiss();
-//				Toast.makeText(getApplicationContext(), String.valueOf(jobList.size()) +" Tasks found", Toast.LENGTH_SHORT).show();
-//			}
-//			//No Tasks Found
-//			else
-//			{
-//				ArrayList<HashMap<String,String>> noTasks = new ArrayList<HashMap<String,String>>();
-//				HashMap<String,String> map = new HashMap<String, String>();
-//				map.put("No_Tasks",getString(R.string.no_tasks_msg));
-//				noTasks.add(map);
-//				ListAdapter adapter = new SimpleAdapter(JobViewActivity.this,
-//												noTasks,R.layout.no_tasks_item,
-//												new String[]{"No_Tasks"},
-//												new int[]{R.id.no_tasks_found});
-//				ListView mainListView = (ListView)findViewById(R.id.TASKS_LIST);
-//				mainListView.setAdapter(adapter);
-//				progressDialog.dismiss();
-//				Toast.makeText(getApplicationContext(), "No Tasks found", Toast.LENGTH_SHORT).show();								
-//			}
-//		}
-//		
-//		
-//		@Override
-//		protected void onCancelled() {
-//    		Log.d("LoadTasks","AsyncTask Cancelled!");
-//    		Toast.makeText(getApplicationContext(), "Cancelled!\n\nYou can Reload from Menu.", Toast.LENGTH_SHORT).show();
-//		}
-//	}
-	
-	
 	
 	private String createJsonURL(String _gridName, String _timeRange)
 	{
 		String _url = "";
-		//_url = "http://dashb-cms-job.cern.ch/dashboard/request.py/taskstablejson?&typeofrequest=A&timerange="+ 
-		//			_timeRange + "&usergridname="+ _gridName;		
 		_url = "http://dashb-cms-job.cern.ch/dashboard/request.py/taskjobsjson?&timerange=" + TIME_RANGE + 
 				"&what=all&taskmonid=" + TASK_NAME;
 		Log.d("TaskURL", _url);
