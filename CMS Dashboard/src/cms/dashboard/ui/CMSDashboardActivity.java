@@ -1,5 +1,6 @@
 package cms.dashboard.ui;
 
+import cms.dashboard.ioClasses.PreferenceConnector;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -17,6 +18,10 @@ import android.widget.CheckBox;
 import android.widget.Spinner;
 
 
+/**
+ * @author Parth Patel [parthpatel32@gmail.com]
+ *
+ */
 public class CMSDashboardActivity extends Activity {
 	
 	private String gridName, timeRange;

@@ -5,6 +5,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+/**
+ * @author Parth Patel [parthpatel32@gmail.com]
+ *
+ */
 public class AboutAppActivity extends Activity {
 
 	@Override

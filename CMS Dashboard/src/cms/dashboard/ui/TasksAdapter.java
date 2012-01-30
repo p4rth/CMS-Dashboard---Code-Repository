@@ -14,8 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import cms.dashboard.feedModels.TasksModel;
 import cms.dashboard.ui.R;
 
+/**
+ * @author Parth Patel [parthpatel32@gmail.com]
+ *
+ */
 public class TasksAdapter extends ArrayAdapter {
 	int resource;
 	String response;
@@ -120,9 +125,9 @@ public class TasksAdapter extends ArrayAdapter {
 
 		long duration = System.currentTimeMillis() - created.getTime();
 	    long seconds = TimeUnit.MILLISECONDS.toSeconds(duration);
-	    long days = TimeUnit.MILLISECONDS.toDays(duration);
-	    long hours = TimeUnit.MILLISECONDS.toHours(duration);
-	    long minutes = TimeUnit.MILLISECONDS.toMinutes(duration);
+	    long days = seconds/86400;//TimeUnit.MILLISECONDS.toDays(duration);
+	    long minutes = seconds/60;//TimeUnit.MILLISECONDS.toMinutes(duration);
+	    long hours = minutes/60;//TimeUnit.MILLISECONDS.toHours(duration);
 	    if (days > 0) {
 	        return days + " Days";
 	    }
