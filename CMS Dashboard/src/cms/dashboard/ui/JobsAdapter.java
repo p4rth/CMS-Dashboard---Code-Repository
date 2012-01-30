@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import cms.dashboard.feedModels.JobsModel;
+import cms.dashboard.feedModels.TasksModel;
 import cms.dashboard.ui.R;
 
 public class JobsAdapter extends ArrayAdapter {
@@ -29,35 +31,37 @@ public class JobsAdapter extends ArrayAdapter {
 	}
 	
 	static class ViewHolder{
-		TextView totalJobs;
-		TextView successJobs;
-		TextView completedJobs;
-		TextView taskName;
-		TextView runnigJobs;
-		TextView submitDate;
-		TextView pendingJobs;
-		TextView unknownJobs;
-		TextView failedJobs;
+		TextView idInTask;
+		TextView applStatus;
+//		TextView applExitCode;
+//		TextView gridEndStatus;
+//		TextView retries;
+//		TextView site;
+//		TextView submitted;
+//		TextView started;
+//		TextView finished;
+//		TextView startedFinished;
 	}
 	public View getView(int position,View convertView, ViewGroup parent)
 	{
 		ViewHolder holder;
-		TasksModel tm = (TasksModel)getItem(position);
-		
+		JobsModel jm = (JobsModel)getItem(position);
+		//TasksModel tm = (TasksModel)getItem(position);
 		if(convertView==null)
 		{
-			convertView = mInFlater.inflate(R.layout.task_list_item, null);
+			//convertView = mInFlater.inflate(R.layout.task_list_item, null);
+			convertView = mInFlater.inflate(R.layout.job_list_item, null);
 			holder = new ViewHolder();
 			
-			holder.totalJobs = (TextView)convertView.findViewById(R.id.TOTAL_NO);
-			holder.successJobs = (TextView)convertView.findViewById(R.id.SUCCESS_NO);
-			holder.completedJobs = (TextView)convertView.findViewById(R.id.COMPLETED);
-			holder.taskName = (TextView)convertView.findViewById(R.id.TASK_SCREEN_NAME);
-			holder.runnigJobs = (TextView)convertView.findViewById(R.id.RUNNING_NO);
-			holder.submitDate = (TextView)convertView.findViewById(R.id.TASK_SUBMIT_DATE);
-			holder.pendingJobs = (TextView)convertView.findViewById(R.id.PENDING_NO);
-			holder.unknownJobs = (TextView)convertView.findViewById(R.id.UNKNOWN_NO);
-			holder.failedJobs = (TextView)convertView.findViewById(R.id.FAILED_NO);
+			holder.idInTask = (TextView)convertView.findViewById(R.id.ID_IN_TASK);
+			holder.applStatus = (TextView)convertView.findViewById(R.id.STATUS);
+//			holder.applExitCode = (TextView)convertView.findViewById(R.id.APPL_EXIT_CODE);
+//			holder.gridEndStatus = (TextView)convertView.findViewById(R.id.GRID_END_STATUS);
+//			holder.retries = (TextView)convertView.findViewById(R.id.RETRIES);
+//			holder.site = (TextView)convertView.findViewById(R.id.SITE);
+//			holder.submitted = (TextView)convertView.findViewById(R.id.SUBMITTED);
+//			holder.startedFinished = (TextView)convertView.findViewById(R.id.STARTED_FINISHED);
+			//holder.finished = (TextView)convertView.findViewById(R.id.FINISHED);
 			
 			convertView.setTag(holder);
 		}
@@ -66,45 +70,68 @@ public class JobsAdapter extends ArrayAdapter {
 			holder = (ViewHolder)convertView.getTag();
 		}
 		
-		holder.totalJobs.setText("Total: "+tm.NUMOFJOBS);
-		holder.successJobs.setText("Successful: "+tm.SUCCESS);
-		holder.completedJobs.setText(getStatus(tm.SUCCDONE, tm.NUMOFJOBS));
-//		if(holder.completedJobs.getText() == "Done"){
-//			holder.completedJobs.setBackgroundColor(getStatusBg(tm.SUCCDONE, tm.NUMOFJOBS));
-//		}
-		holder.taskName.setText(tm.TASKMONID);
-		holder.runnigJobs.setText("Running: "+tm.RUNNING);
-		holder.submitDate.setText(getElapsedTime(tm.TaskCreatedTimeStamp));
-		holder.pendingJobs.setText("Pending: "+tm.PENDING);
-		holder.unknownJobs.setText("Unknown: "+tm.UNKNOWN);
-		holder.failedJobs.setText("Failed: "+tm.FAILED);
+		holder.idInTask.setText("ID: "+ jm.EventRange);
+		holder.applStatus.setText("Status: " + getStatus(jm.STATUS));
+		holder.applStatus.setTextColor(getStatusColour(jm.STATUS));
+//		holder.applExitCode.setText("Appl Exit Code: "+ jm.JobExecExitCode);
+//		holder.gridEndStatus.setText("Grid end Status: " + jm.STATUS);
+//		holder.retries.setText("Retries: " + jm.resubmissions);
+//		holder.site.setText("Site: " + jm.Site);
+//		holder.submitted.setText("Submitted: " + jm.submitted);
+//		holder.startedFinished.setText("Started: "+ jm.started + " Finished: " + jm.finished);
 		
 		return convertView;
 	}
 	
-	private String getStatus(int _succDone, int _totalJobs)
+	private String getStatus(String _value)
 	{
-		if(_succDone == _totalJobs)
+		if(_value.equals("S"))
 		{
-			return "Done";
+			return "Successful";
 		}
-		else
+		else if (_value.equals("R"))
 		{
-			return "Completed: " + _succDone + " out of " + _totalJobs;
+			return "Running";
 		}
+		else if(_value.equals("F"))
+		{
+			return "Failed";
+		}
+		else if(_value.equals("U"))
+		{
+			return "Unknown";
+		}
+		else if(_value.equals("P"))
+		{
+			return "Pending";
+		}
+		return _value;
 				
 	}
-	
-	private int getStatusBg(int _succDone,int _totalJobs)
+	private int getStatusColour(String _value)
 	{
-		if(_succDone == _totalJobs)
+		if(_value.equals("S"))
 		{
 			return Color.parseColor("#98CB98");
 		}
-		else
+		else if (_value.equals("R"))
 		{
-			return Color.parseColor("#00ffff");
+			return Color.parseColor("#CCCCFE");
 		}
+		else if(_value.equals("F"))
+		{
+			return Color.parseColor("#FF0000");
+		}
+		else if(_value.equals("U"))
+		{
+			return Color.parseColor("#DDFEAA");
+		}
+		else if(_value.equals("P"))
+		{
+			return Color.parseColor("#FEFE98");
+		}
+		return Color.parseColor("#FFFFFF");
+				
 	}
 	
 	public static String getElapsedTime(String dt) {

@@ -132,15 +132,12 @@ public class TaskViewActivity extends Activity {
 			progressDialog.dismiss();
 			Toast.makeText(getApplicationContext(), String.valueOf(tasksArray.size()) +" Tasks found", Toast.LENGTH_SHORT).show();
 			lv.setOnItemClickListener(new OnItemClickListener() {
-				//TODO Create New intent for Jobs View from here. 
-				//		Below is the sample code showing how to access selected task name and time range
-				//		needed for Jobs Feed. You will need to pass these two information to new intent
 				public void onItemClick(AdapterView<?> arg0, View arg1,	int position, long arg3) {
-					ShowJobs(position);
+					showJobs(position);
 				
-					Toast.makeText(getApplicationContext(), 
-							"Task Name: "+ tasksArray.get(position).TASKMONID.toString() + "\n" + "Time: "+TIME_RANGE,
-							Toast.LENGTH_SHORT).show();
+//					Toast.makeText(getApplicationContext(), 
+//							"Task Name: "+ tasksArray.get(position).TASKMONID.toString() + "\n" + "Time: "+TIME_RANGE,
+//							Toast.LENGTH_SHORT).show();
 				}			
 			});
 		}
@@ -151,7 +148,7 @@ public class TaskViewActivity extends Activity {
 		
 	}
 			
-	private void ShowJobs(int index) {
+	private void showJobs(int index) {
 		Intent jobView = new Intent(Intent.ACTION_VIEW);
     	jobView.setClassName(this, JobViewActivity.class.getName());
     	

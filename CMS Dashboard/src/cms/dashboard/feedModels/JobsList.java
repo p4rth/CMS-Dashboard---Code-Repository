@@ -5,14 +5,9 @@ import java.util.List;
 
 
 public class JobsList {
-	public List<JobsModel> jobs;
-	
+	public JobsListMeta meta;
 	public String plotParameters;
-	public String username;
-
-	public void sortByDate()
-	{
-		Collections.sort(jobs, JobsModel.Order.ByDate.dsc());
-	}
-	
+	public List<JobsModel> jobs;
+	public List<TasksModel> tasks;
+		
 }

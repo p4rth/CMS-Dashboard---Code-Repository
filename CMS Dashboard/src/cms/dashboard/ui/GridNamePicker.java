@@ -72,13 +72,19 @@ public class GridNamePicker extends Activity {
       
       
       
-      
-      //Start Async task to Load Grid Names
-      loadNamesTask = new taskLoadGridNames();
-      loadNamesTask.execute(null);
-            
-      //Assign onclick Listener
-      assignItemClickListener();
+		if(JSONFunctions.checkDataConn(getApplicationContext())== true)
+		{	
+		      //Start Async task to Load Grid Names
+		      loadNamesTask = new taskLoadGridNames();
+		      loadNamesTask.execute(null);      
+		      //Assign onclick Listener
+		      assignItemClickListener();
+		}
+		else
+		{
+			Toast.makeText(getApplicationContext(), "Sorry, unable to connect to feed server.", Toast.LENGTH_LONG).show();
+		}
+
 	}
 			
 	

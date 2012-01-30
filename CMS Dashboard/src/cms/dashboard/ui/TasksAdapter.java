@@ -126,6 +126,7 @@ public class TasksAdapter extends ArrayAdapter {
 		long duration = System.currentTimeMillis() - created.getTime();
 	    long seconds = TimeUnit.MILLISECONDS.toSeconds(duration);
 	    long days = seconds/86400;//TimeUnit.MILLISECONDS.toDays(duration);
+	    //long days1 = TimeUnit.DAYS.toDays(duration);
 	    long minutes = seconds/60;//TimeUnit.MILLISECONDS.toMinutes(duration);
 	    long hours = minutes/60;//TimeUnit.MILLISECONDS.toHours(duration);
 	    if (days > 0) {
