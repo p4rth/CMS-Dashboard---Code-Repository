@@ -19,6 +19,9 @@ import cms.dashboard.feedModels.TasksModel;
 import cms.dashboard.ui.R;
 
 public class JobsAdapter extends ArrayAdapter {
+	/**
+	 * Author Ben Taliadoros [ee08bbt@brunel.ac.uk]
+	 */
 	int resource;
 	String response;
 	Context context;
