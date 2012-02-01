@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CMS Dashboard</string>
+    <string name="URL_JSON_GridName">http://dashb-cms-job-task.cern.ch/dashboard/request.py/listusers-api</string>
+    <string name="task_view">Tasks List</string>
+    <string name="no_tasks_msg">No Tasks found</string>          
+    <string name="date_prompt">Time Range</string>
+	<string-array name="date_prompt_values">
+	<!-- lastDay, last2Days, last3Days, lastWeek, last2Weeks, lastMonth  -->
+	    <item>Last Day</item>
+	    <item>Last 2 Days</item>
+	    <item>Last 3 Days</item>
+	    <item>Last Week</item>
+	    <item>Last 2 Weeks</item>
+	    <item>Last Month</item>	  
+	</string-array>     
+	
+	<string-array name="tasks_sort_values">
+	    <item>Task Name </item>	   
+	    <item>"Date (Oldest First)" </item>
+	    <item>"Date (Newest First)" </item>
+	    <item>"Total Jobs (Asc)"</item>
+	    <item>"Total Jobs (Desc)"</item>
+	</string-array>
+	
+	<!-- Note that this number should be in Milliseconds -->
+	<string name="json_timeout">60000</string>
+	
+	
+	<string name="about_app">\
+	    <b>Usage</b>\nChoose your identity in the "Select a User" field, select the time window to define the tasks submitted during a given time range, you should get at the screen the list of all your tasks submitted over the time range you have chosen. Adjusting the <i>Timerange: </i>Shows the Tasks created during the selected time range.\n\n<u>For example:</u>\nIf a task was created one week ago and it is still running, you have to select the Last Week option (or a bigger time range value) to be able to view it. If you select any smaller value than Last Week, the task will not appear. The page automatically reloads and updates its records every 5 minutes. If you are using CRAB server, please be aware that only jobs which had been already submitted to the GRID or CAF are available in the task monitoring.\n\n\n<b>Navigation</b>\nPlease avoid using the browser\'s back and forward buttons. Use the buttons provided by the application.\n\n\n<b>Graphical Plots</b><br/>\na) Click on the plot to zoom in.\nb) Click and Drag the plot to move and re-arrange its position.\nc) Click again on the plot to zoom out.\n
+	    </string>
+	<string name="dev_credits">Developed by: Parth Patel, Benjamin Taliadoros</string>
+</resources>
