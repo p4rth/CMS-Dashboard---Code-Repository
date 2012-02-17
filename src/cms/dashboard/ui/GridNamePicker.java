@@ -76,7 +76,7 @@ public class GridNamePicker extends Activity {
 		{	
 		      //Start Async task to Load Grid Names
 		      loadNamesTask = new taskLoadGridNames();
-		      loadNamesTask.execute(null);      
+		      loadNamesTask.execute();      
 		      //Assign onclick Listener
 		      assignItemClickListener();
 		}
