@@ -25,7 +25,7 @@
 	
 	<!-- Note that this number should be in Milliseconds -->
 	<string name="json_timeout">60000</string>
-	
+	<string name="GA_Account">"UA–26300809–1"</string>
 	
 	<string name="about_app">\
 <b>Usage</b>\nChoose your identity in the "Select a User" field, select the time window to define the tasks submitted during a given time range, you should get at the screen the list of all your tasks submitted over the time range you have chosen. Adjusting the <i>Timerange: </i>Shows the Tasks created during the selected time range.\n\n<u>For example:</u>\nIf a task was created one week ago and it is still running, you have to select the Last Week option (or a bigger time range value) to be able to view it. If you select any smaller value than Last Week, the task will not appear. \n\n\nTo refresh displayed list of task select <b>Menu > Reload</b> on your phone. \n\n\n<b>Navigation</b>\nThe navigation on Application is divided in four sections. \na)Main View, allows you to select User Name and Time Range \nb)Tasks View, displays list of Task \nc) Jobs View, displays jobs within selected Task\nd)Job Details, displays detailed information of a particular job. \n\n\nPlease use Return button on your phone to go back to previous screen. \n\n\n<b>Sort Tasks</b><br/>\nTo Sort list of Tasks select <i><u>Sort</u></i> from Menu, the application will present you with several options. 	    </string>

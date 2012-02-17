@@ -8,6 +8,7 @@ import cms.dashboard.feedModels.TasksList;
 import cms.dashboard.feedModels.TasksModel;
 import cms.dashboard.ioClasses.JSONFunctions;
 
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
@@ -51,6 +52,7 @@ public class TaskViewActivity extends Activity {
 	private String TIME_RANGE = "";
 	private ProgressDialog progressDialog;
 //	ArrayList<HashMap<String,String>> tasklist = new ArrayList<HashMap<String,String>>();
+	GoogleAnalyticsTracker tracker;
 	
 	/* New vars */
 	
@@ -84,6 +86,17 @@ public class TaskViewActivity extends Activity {
 
 
 		getTasks();
+        tracker.startNewSession("UA-26300809-1",20, this);
+        tracker.trackPageView("/TaskViewActivity");
+
+	}
+	
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+    	tracker.dispatch();
+    	tracker.stopSession();
 	}
 	
 	private class TasksSync extends AsyncTask<String, Integer, TasksList>{
@@ -131,6 +144,7 @@ public class TaskViewActivity extends Activity {
 			enableMenuSort = true;
 			progressDialog.dismiss();
 			Toast.makeText(getApplicationContext(), String.valueOf(tasksArray.size()) +" Tasks found", Toast.LENGTH_SHORT).show();
+			tracker.trackEvent("TaskViewActivity", "Completed", "Fetch Tasks from JSON", 0);
 			lv.setOnItemClickListener(new OnItemClickListener() {
 				public void onItemClick(AdapterView<?> arg0, View arg1,	int position, long arg3) {
 					showJobs(position);
@@ -152,6 +166,7 @@ public class TaskViewActivity extends Activity {
     	jobView.putExtra("taskName", tasksArray.get(index).TASKMONID.toString());
     	jobView.putExtra("timeRange", TIME_RANGE);
     	startActivity(jobView);
+    	tracker.trackEvent("TaskViewActivity", "Clicked", "Task Item - Opening Jobs View", 0);
 		
 	}
 	
@@ -180,9 +195,11 @@ public class TaskViewActivity extends Activity {
 		{
 			case R.id.menu_about:
 				startActivity(new Intent(this,AboutAppActivity.class));
+				tracker.trackEvent("AboutAppActivity", "Visited", "TaskViewActivity", 0);
 				break;
 			case R.id.menu_refresh:
 				getTasks();
+				tracker.trackEvent("TaskViewActivity", "Completed", "Tasks Refresh", 0);
 				break;
 			case R.id.menu_sort:
 				Resources res = getResources();
@@ -266,18 +283,23 @@ public class TaskViewActivity extends Activity {
 		{
 			case 0:	//Sort by Task Name
 				Collections.sort(tasksArray,TasksModel.Order.ByTaskName.asc());
+				tracker.trackEvent("TaskViewActivity", "Sorted", "Tasks - Sort by Name", 0);
 				break;
 			case 1: //Sort by Date Oldest
 				Collections.sort(tasksArray,TasksModel.Order.ByDate.asc());
+				tracker.trackEvent("TaskViewActivity", "Sorted", "Tasks - Sort by Date Oldest", 0);
 				break;
 			case 2: //Sort by Date Newest
 				Collections.sort(tasksArray,TasksModel.Order.ByDate.dsc());
+				tracker.trackEvent("TaskViewActivity", "Sorted", "Tasks - Sort by Date Newest", 0);
 				break;
 			case 3:	//Total Jobs Asc
 				Collections.sort(tasksArray,TasksModel.Order.ByTotalJobs.asc());
+				tracker.trackEvent("TaskViewActivity", "Sorted", "Tasks - Sort by Total Jobs Asc", 0);
 				break;
 			case 4: //Total Jobs Desc
 				Collections.sort(tasksArray,TasksModel.Order.ByTotalJobs.dsc());
+				tracker.trackEvent("TaskViewActivity", "Sorted", "Tasks - Sort by Total Jobs Desc", 0);
 				break;				
 		}
 		

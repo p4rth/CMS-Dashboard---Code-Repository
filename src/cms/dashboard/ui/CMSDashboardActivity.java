@@ -1,11 +1,14 @@
 package cms.dashboard.ui;
 
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
+
 import cms.dashboard.ioClasses.PreferenceConnector;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,6 +30,7 @@ public class CMSDashboardActivity extends Activity {
 	private String gridName, timeRange;
 	private Boolean bGridNm, bTimeRange;
 	static final private int CHOOSE_GRIDNAME = 0;	//Activity Request Code, used in selectGridNm
+	GoogleAnalyticsTracker tracker;
 	
     /** Called when the activity is first created. */
     @Override
@@ -37,7 +41,17 @@ public class CMSDashboardActivity extends Activity {
         
         loadTimeRange();
         
-        loadPreference();       
+        loadPreference();
+        
+        //Start GA Session
+        tracker.startNewSession("UA-26300809-1",20, this);
+        tracker.trackPageView("/CMSDashboardActivity");
+    }
+    @Override
+    protected void onDestroy() {
+    	super.onDestroy();
+    	tracker.dispatch();
+    	tracker.stopSession();
     }
     
     //Load Menu for activity
@@ -61,6 +75,7 @@ public class CMSDashboardActivity extends Activity {
     	{
     		case R.id.menu_about:
     			this.startActivity(new Intent(this,AboutAppActivity.class));
+    			tracker.trackEvent("AboutAppActivity", "Visited", "CMSDashboardActivity", 0);
     			break;
     	}
     	return true;
@@ -90,6 +105,7 @@ public class CMSDashboardActivity extends Activity {
     	{
     		PreferenceConnector.writeString(this, PreferenceConnector.Name, gridName);
     		PreferenceConnector.writeBoolean(this, PreferenceConnector.Saved_Name, true);
+    		tracker.trackEvent("CMSDashboardActivity", "Saved", "Preference-Remember Name", 0);
     	}
     	
     }
@@ -99,6 +115,7 @@ public class CMSDashboardActivity extends Activity {
     {
     	PreferenceConnector.getEditor(this).remove(PreferenceConnector.Saved_Name).commit();
     	PreferenceConnector.getEditor(this).remove(PreferenceConnector.Name).commit();
+    	tracker.trackEvent("CMSDashboardActivity", "Removed", "Preference-Remember Name", 0);
     }
     
     
@@ -153,7 +170,8 @@ public class CMSDashboardActivity extends Activity {
 						timeRange = "lastMonth";
 						bTimeRange = true;
 						break;
-				}															
+				}
+				tracker.trackEvent("CMSDashboardActivity", "Clicked", "Select Time Range", 0);
 			}
 
 			public void onNothingSelected(AdapterView<?> arg0) {
@@ -168,6 +186,7 @@ public class CMSDashboardActivity extends Activity {
     {
     	Intent getGridNm = new Intent(this, GridNamePicker.class);    	
     	startActivityForResult(getGridNm, CHOOSE_GRIDNAME);
+    	tracker.trackEvent("CMSDashboardActivity", "Clicked", "Select Username", 0);
     }
     
     
@@ -189,6 +208,7 @@ public class CMSDashboardActivity extends Activity {
     			//Save Selected name if Remember Name is ticked.
     			CheckBox checkbox = (CheckBox)findViewById(R.id.checkRememberNm);
         		if(checkbox.isChecked()==true){ savePrefGridName(); }
+        		tracker.trackEvent("CMSDashboardActivity", "Successful", "Selected Username from GridNamePicker", 0);
 
     		}
     	}
@@ -209,6 +229,7 @@ public class CMSDashboardActivity extends Activity {
 	    	taskView.putExtra("GridName", gridName);
 	    	taskView.putExtra("TimeRange",timeRange);
 	    	startActivity(taskView);
+	    	tracker.trackEvent("CMSDashboardActivity", "Started", "TaskViewActivity", 0);
     	}
     	else
     	{
